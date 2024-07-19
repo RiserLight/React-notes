@@ -591,6 +591,201 @@ To convert json to string JSON.stringify()
 
 # React Router Dom
 
+1. React router dom first matches the more specific route then the dynamic route in whatever order they might be written and they do an exact match
+
+2. Nested routes ka element parent route wala hi page me render karta hai. 
+
+3. Outlet compoennt child routes ka element ko parent reoute me render karne ke liye use hota hai.
+
+4. useParams hook se humlog dynamic parameters kya value pata kar satke hain. Ye dynamic parameter aur uska value ko key value format me return karta hai.
+Example of dynamic parameter /:userId
+
+5. Using useSearchParams hook you can access , add or remove query  parameters.
+import {Outlet,useSearchParams} from 'react-router-dom';
+const [searchParams,setSearchParams]=useSearchParams();
+const isActive=searchParams.get("filter")==="true";
+return (
+    <div>
+    <h2>User 1</h2>
+    <h2>User 2</h2>
+    <h2>User 3</h2>
+    <Outlet/>
+    <button onClick={()=>setSearchParams({filter:"true"})}>Active users</button>
+    <button onClick={()=>setSearchParams()}>Reset filter</button>
+    {
+      isActive ?(<h1>Showing active users</h1>):(<h1>Showing all users</h1>)
+    }
+    </div>
+  );
+
+6. Realtive paths or relative links dont start with a forward / . If a link or path starts with forward slash then it is absolute path
+
+7. A relative link is a link that doesnot starts with the / and will inherit the closest route in which they are rendered.
+
+8. Lazy laoding is a technique when componnets not required on the home page can be split into separate code bundles and downloaded only when the user navigates to that page. You can think of it as incrementally downloading the application.It helps reduce initial load time thereby improving performance.
+
+9. main-chunk.js is the bundle size of js 
+
+10. To do lazy lad we need:
+(a) Dynamic imports : For dynamic imports we need default export of the components
+(b) React Suspense
+
+11. To connect url in the browser with the application we use BrowserRouter.
+
+12. Routes component ke andar sirf Route ya react fragment hi use ho sakta hai.
+
+13. Saara react router dom se related chiz browser router me wrap hona chahiye.
+
+14. React router dom does exact path match.
+
+15. BrowserRouter , Routes , Route , NavLink, Link , useNavigate, Outlet
+
+16. The `Link` and `NavLink` components in `react-router-dom` are used for navigating between routes in a React application.
+
+Link Component
+
+The `Link` component is used to create links between routes. It renders an accessible `<a>` element with a real `href` that points to the resource it's linking to. This means that things like right-clicking a `<Link>` work as you'd expect.
+
+Example:
+
+```jsx
+<Link to="/about">About</Link>
+```
+
+When the link is clicked, it navigates to the `/about` route without reloading the page.
+
+NavLink Component
+
+The `NavLink` component is a special version of the `Link` component that adds some extra functionality. It automatically adds an `active` class to the link when the current URL matches the `to` prop[2].
+
+Example:
+
+```jsx
+<NavLink to="/about" style={({ isActive }) =>
+  isActive ? { color: 'green' } : { color: 'black' }
+}>
+  About
+</NavLink>
+```
+
+In this example, the `style` prop is used to conditionally apply a green color to the link when it is active (the current URL matches `/about`).
+
+The `NavLink` component is commonly used for creating navigation menus or tabs in a React application.
+
+Both `Link` and `NavLink` components accept a `to` prop, which can be a string or an object representing the target location to which the link should navigate[1][3].
+
+In summary, the `Link` component is used for creating links between routes, while the `NavLink` component adds extra functionality by automatically applying an `active` class or style when the current URL matches the link's `to` prop.
+
+17. The `useNavigate` hook in `react-router-dom` is used to navigate programmatically between routes in a React application. It provides an imperative way to navigate without using the `Link` or `NavLink` components.
+
+To use `useNavigate`, you need to import it from `react-router-dom`:
+
+```jsx
+import { useNavigate } from 'react-router-dom';
+```
+
+Inside a component, you can obtain the `navigate` function by calling `useNavigate()`:
+
+```jsx
+const navigate = useNavigate();
+```
+
+
+To navigate to a specific route, call the `navigate` function with the target path as the argument:
+
+```jsx
+navigate('/about');
+```
+
+This will navigate to the `/about` route.
+
+
+You can also pass a number to `navigate` to move back or forward in the history stack:
+
+```jsx
+navigate(-1); // Go back one step in history
+navigate(1); // Go forward one step in history
+```
+
+
+The `navigate` function also accepts an optional second argument, which is an object with various options:
+
+- `replace`: If `true`, replaces the current entry in the history stack instead of adding a new one.
+- `state`: Allows you to pass state to the destination route, which can be accessed via `useLocation`.
+- `preventScrollReset`: Disables resetting the scroll position when navigating.
+
+
+```jsx
+navigate('/about', { replace: true, state: { fromHome: true } });
+```
+
+`useNavigate` is commonly used inside `useEffect` hooks to navigate based on certain conditions:
+
+```jsx
+useEffect(() => {
+  if (condition) {
+    navigate('/error');
+  }
+}, [condition, navigate]);
+```
+
+In summary, `useNavigate` provides a way to navigate between routes imperatively in a React application, allowing you to control navigation based on user actions or application state.
+
+18. useLocation Hook: 
+The `useLocation` hook in `react-router-dom` is used to access the current URL location object. It provides information about the current URL, such as the pathname, search parameters, hash, and state.
+
+Here are a few key points about using `useLocation`:
+
+
+
+To use `useLocation`, you need to import it from `react-router-dom`:
+
+```jsx
+import { useLocation } from 'react-router-dom';
+```
+
+
+
+Inside a component, you can obtain the current location object by calling `useLocation()`:
+
+```jsx
+const location = useLocation();
+```
+
+
+
+The `location` object returned by `useLocation` has the following properties:
+
+- `pathname`: The path part of the URL, including the file name (if any).
+- `search`: The query string portion of the URL, including the leading question mark.
+- `hash`: The fragment identifier (including the hash symbol) of the URL.
+- `state`: Any location state that was passed to the `navigate` function or `Link` component.
+- `key`: A unique string representing this entry in the history stack.
+
+Example:
+
+```jsx
+const { pathname, search, hash, state, key } = useLocation();
+console.log(pathname); // Output: "/about"
+console.log(search); // Output: "?q=hello"
+console.log(hash); // Output: "#section1"
+console.log(state); // Output: { fromHome: true }
+console.log(key); // Output: "abc123"
+```
+
+
+`useLocation` is commonly used inside `useEffect` hooks to perform side effects based on the current location:
+
+```jsx
+useEffect(() => {
+  // Perform some action when the location changes
+  trackPageView(location.pathname);
+}, [location]);
+```
+
+In summary, `useLocation` provides access to the current URL location object, allowing you to retrieve information about the current route and perform actions based on the location changes in your React application.
+
+
 
 # Context Api
 
