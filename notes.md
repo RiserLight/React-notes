@@ -94,7 +94,7 @@ className={condition?"claa1":"class2"}
 
 40. To handle event listeners in react use callback functions.
 
-41. 
+41. To increase the height of a <div> element using percentages in CSS, you can set the height property to a percentage value. The percentage is relative to the height of the parent element. If the parent element does not have a defined height, the percentage will not have a reference point, and the <div> may not behave as expected.
 
 42. 
 
