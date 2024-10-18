@@ -1181,7 +1181,7 @@ Use Reducers and Middlewares: Instead of using useEffect to handle state changes
 
 3. 
 
-# Redux and redux persist
+
 
 
 # CSS 
