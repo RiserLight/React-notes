@@ -1,9 +1,17 @@
 
-import { createSlice,nanoid ,current} from "@reduxjs/toolkit";
+import { createSlice,nanoid ,current , createAsyncThunk} from "@reduxjs/toolkit";
 
 const initialState={
+  userAPIData: [],
   users:JSON.parse(localStorage.getItem("users"))?JSON.parse(localStorage.getItem("users")):[]
 };
+
+// first argument is the name of action
+export const fetchApiUsers=createAsyncThunk("fetchApiUsers",async()=>{
+  const result=await fetch('https://jsonplaceholder.typicode.com/users');
+  return await result.json();
+ 
+});
 
 const Slice=createSlice({
   name:'User',
@@ -25,7 +33,13 @@ const Slice=createSlice({
       const value=JSON.stringify(data);
       localStorage.removeItem("users",value)
     }
-  }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchApiUsers.fulfilled, (state, action) => {
+        state.userAPIData = action.payload
+    })
+
+}
 });
 
 export const {addUser,removeUser}=Slice.actions;
