@@ -1273,7 +1273,17 @@ marhin:'0 auto' (top-bottom left-right)
 
 24. Yadi form me ek bhi button hain to wo submit karne lagega. Issliye type ="button" use karo
 
-25. 
+25. Position : static (default), sticky , fixed,absolute,relative. These properties have attributes as : left, right , top , bottom and z-index. All these properties work with all position except static.
+
+26. Relative : Current window ke relative object ko place karta hai. Old space before applying relative property is maintained.
+
+27. absolute: relative to closest ancestor. Make close ancestor position as realtive. Prev gap is removed.
+
+28. Position fixed se image fixed ho jaayega apna jagah par window ke according.
+
+29. Sticky : Ye sirf apne parent ke andar iska position fixed rehta hai.
+
+30. z-index object ko z-axis par move karne ka kaam karta hain.
 
 # Nextjs
 
@@ -1755,4 +1765,10 @@ do the proper api calls
 
 The error you're seeing is from Immer.js, which is commonly used with Redux Toolkit to allow you to write "mutative" code while maintaining immutability under the hood. The error message indicates that the current function is being called on an object that is not recognized as a draft, which is a problem because Immer works with drafts internally.
 
-60. 
+60. Yadi app folder ke andar _ se start karke koi folder banate hain to wo routing me nahi aayega
+
+61. Api ka route ke liye route.js naam se file banao  eg. app/api/restaurant/route.js
+
+62. event bina diye bhi koi on wala function by default le lega
+
+
